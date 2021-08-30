@@ -1,0 +1,49 @@
+### SIGNUP USER
+POST http://localhost:3000/signup HTTP/1.1
+Content-Type: application/json
+
+{
+    "name": "Kid Doe",
+    "username": "kidoe",
+    "email": "kidoe@some.com",
+    "password": "kiddoe"
+}
+
+### LOGIN USER
+POST http://localhost:3000/login HTTP/1.1
+Content-Type: application/json
+
+{
+    "username": "jadoe",
+    "password": "janedoe"
+}
+
+### LOGOUT USER
+GET http://localhost:3000/logout HTTP/1.1
+
+### CREATE TODO ITEM
+POST http://localhost:3000/item HTTP/1.1
+Content-Type: application/json
+
+{
+    "title": "Lorem1",
+    "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur libero explicabo neque nobis temporibus voluptas ducimus, odit distinctio delectus culpa, modi quaerat amet at repellat ea unde voluptatem. Alias, facere."
+}
+
+### GET ALL TODO ITEM
+GET http://localhost:3000/items HTTP/1.1
+
+### GET SINGLE TODO ITEM
+GET http://localhost:3000/item/Lorem1 HTTP/1.1
+
+### UPDATE TODO ITEM
+PUT http://localhost:3000/item/Lorem1 HTTP/1.1
+Content-Type: application/json
+
+{
+    "title": "Lorem2",
+    "description": "Ltis id error a incidunt recusandae, officia facilis dicta iusto, qui officiis quia adipisci vel dolorem assumenda repellendus. Officiis repellat esse modi!"
+}
+
+### DELETE TODO ITEM
+DELETE http://localhost:3000/item/Lorem1 HTTP/1.1
