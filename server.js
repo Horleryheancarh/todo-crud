@@ -22,6 +22,10 @@ fastify.decorate('isLoggedIn', {
 fastify.register(require('./routes/userRoutes'))
 fastify.register(require('./routes/itemRoutes'))
 
+fastify.get('/', (req, reply) => {
+    reply.send({message: 'Welcome to my todo-crud backend API'})
+})
+
 
 // DATABASE CONNECT
 mongoose.connect(process.env.DB_URI, {
