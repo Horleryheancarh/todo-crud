@@ -7,7 +7,7 @@ const mongoose = require('mongoose')
 // PRESETS
 fastify.register(require('fastify-swagger'), {
     exposeRoute: true,
-    routePrefix: '/docs',
+    routePrefix: '/',
     swagger: {
         info: {title: 'TODO-crud'}
     }
@@ -21,10 +21,6 @@ fastify.decorate('isLoggedIn', {
 // ROUTES
 fastify.register(require('./routes/userRoutes'))
 fastify.register(require('./routes/itemRoutes'))
-
-fastify.get('/', (req, reply) => {
-    reply.send({message: 'Welcome to my todo-crud backend API'})
-})
 
 
 // DATABASE CONNECT
