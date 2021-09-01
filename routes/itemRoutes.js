@@ -15,6 +15,7 @@ const Item = {
     properties: {
         title: { type: 'string' },
         email: { type: 'string' },
+        description: { type: 'string' },
         subItems: { 
             type: 'array',
             items: subItem

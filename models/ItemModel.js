@@ -11,6 +11,9 @@ const itemSchema = new Schema ({
     email: {
         type: String,
     },
+    description: {
+        type: String,
+    },
     subItems: {
         type: Array,
         properties: {
