@@ -27,7 +27,11 @@ Content-Type: application/json
 
 {
     "title": "Lorem1",
-    "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur libero explicabo neque nobis temporibus voluptas ducimus, odit distinctio delectus culpa, modi quaerat amet at repellat ea unde voluptatem. Alias, facere."
+    "description": "Lorem dipsum id error incidunt",
+    "subItems": [
+        { "details": "Buy crap" },
+        { "details": "Sell shit" }
+        ]
 }
 
 ### GET ALL TODO ITEM

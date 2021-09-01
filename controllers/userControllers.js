@@ -30,7 +30,6 @@ const loginUser = async (req, reply) => {
         const { username, password } = req.body
         const user = await User.find({ username: username })
 
-
         if (!user) {
             reply.code(300).send({message: 'Invalid Credentials'})
         } else {

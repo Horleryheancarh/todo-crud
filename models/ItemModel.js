@@ -11,11 +11,12 @@ const itemSchema = new Schema ({
     email: {
         type: String,
     },
-    description: {
-        type: String,
-    },
-    completed: {
-        type: Boolean,
+    subItems: {
+        type: Array,
+        properties: {
+            details: String,
+            completed: Boolean
+        }
     }
 })
 

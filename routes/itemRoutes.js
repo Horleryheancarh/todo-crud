@@ -1,12 +1,24 @@
 const { getItems, getItem, postItem, deleteItem, updateItem } = require('../controllers/itemControllers')
 
+// subItem Schema
+const subItem = {
+    type: 'object',
+    properties: {
+        details: { type: 'string' },
+        completed: { type: 'boolean' }
+    }
+}
+
 // Item Schema
 const Item = {
     type: 'object',
     properties: {
         title: { type: 'string' },
         email: { type: 'string' },
-        description: { type: 'string' },
+        subItems: { 
+            type: 'array',
+            items: subItem
+        },
     }
 }
 
@@ -44,7 +56,7 @@ const postItemOpts = {
             properties: {
                 username: { type: 'string' },
                 title: { type: 'string' },
-                description: { type: 'string' },
+                subItems: { type: 'array' },
             }
         },
         response: {
