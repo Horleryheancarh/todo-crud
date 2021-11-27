@@ -34,6 +34,8 @@ const getItemsOpts = {
         }
     },
 
+    preHandler: fastify.jwtAuth,
+
     handler: getItems
 }
 
@@ -95,12 +97,13 @@ const updateItemOpts = {
     handler: updateItem
 }
 
+
 function itemRoutes (fastify, options, done) {
     // Get all items
     fastify.get('/items', getItemsOpts)
 
     // Get single item description
-    fastify.get('/item/:title', getItemOpts)
+    fastify.get('/item/:title',  getItemOpts)
     
     // Add item
     fastify.post('/item', postItemOpts)
@@ -110,7 +113,7 @@ function itemRoutes (fastify, options, done) {
 
     // Update item
     fastify.put('/item/:title', updateItemOpts)
-
+    
     done()
 }
 

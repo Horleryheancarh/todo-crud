@@ -1,4 +1,4 @@
-const { signupUser, loginUser, logoutUser } = require('../controllers/userControllers')
+const { signupUser, loginUser } = require('../controllers/userControllers')
 
 // Schemas
 const User = {
@@ -44,29 +44,14 @@ const logIn = {
             200: {
                 type: 'object',
                 properties: {
-                    message: { type: 'string' }
+                    message: { type: 'string' },
+                    token: { type: 'string' }
                 }
             }
         }
     },
 
     handler: loginUser
-}
-
-// Logout
-const logOut = {
-    schema: {
-        response: {
-            200: {
-                type: 'object',
-                properties: {
-                    message: { type: 'string' }
-                }
-            }
-        }
-    },
-
-    handler: logoutUser
 }
 
 function userRoutes (fastify, options, done) {
@@ -76,9 +61,6 @@ function userRoutes (fastify, options, done) {
 
     // Login user
     fastify.post('/login', logIn)
-
-    // Logout user
-    fastify.get('/logout', logOut)
 
     done()
 }

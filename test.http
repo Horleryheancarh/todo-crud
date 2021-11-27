@@ -36,12 +36,14 @@ Content-Type: application/json
 
 ### GET ALL TODO ITEM
 GET http://localhost:3000/items HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyMSI6eyJfaWQiOiI2MTJhNjcxZDAxODdmZTQyMzkxMTg0OTEiLCJuYW1lIjoiSmFuZSBEb2UiLCJ1c2VybmFtZSI6ImphZG9lIiwiZW1haWwiOiJqYW5lZG9lQHNvbWUuY29tIiwicGFzc3dvcmQiOiIkMmEkMTAkSTNiZld0QU1mcDNIZmVXYzIudG1OZUguSnJwcDQwc3ZlQldCOG9WZWtHeUhKRWNBbVQwUTYiLCJfX3YiOjB9LCJpYXQiOjE2Mzc3NDM4ODMsImV4cCI6MTYzNzc0NTY4M30.3992J1AUiOux_jEs84OXHNeK1BJctyWN6Njs1O0SrC8
 
 ### GET SINGLE TODO ITEM
 GET http://localhost:3000/item/Lorem1 HTTP/1.1
 
 ### UPDATE TODO ITEM
 PUT http://localhost:3000/item/Lorem1 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyMSI6eyJfaWQiOiI2MTJhNjcxZDAxODdmZTQyMzkxMTg0OTEiLCJuYW1lIjoiSmFuZSBEb2UiLCJ1c2VybmFtZSI6ImphZG9lIiwiZW1haWwiOiJqYW5lZG9lQHNvbWUuY29tIiwicGFzc3dvcmQiOiIkMmEkMTAkSTNiZld0QU1mcDNIZmVXYzIudG1OZUguSnJwcDQwc3ZlQldCOG9WZWtHeUhKRWNBbVQwUTYiLCJfX3YiOjB9LCJpYXQiOjE2Mzc3NDM4ODMsImV4cCI6MTYzNzc0NTY4M30.3992J1AUiOux_jEs84OXHNeK1BJctyWN6Njs1O0SrC8
 Content-Type: application/json
 
 {
@@ -55,3 +57,19 @@ Content-Type: application/json
 
 ### DELETE TODO ITEM
 DELETE http://localhost:3000/item/Lorem1 HTTP/1.1
+
+
+
+###
+GET http://localhost:3000/routerDemo HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFiY0B4eXouY29tIiwidXNlciI6ImFiYyIsInBhc3N3b3JkIjoicGFzc3dvcmQiLCJpYXQiOjE2Mzc2Nzg2ODEsImV4cCI6MTYzNzc2NTA4MX0.1WxId0MJgngLGyJh08BVhE2ZPMrjoRaiidH0eMyyz5Q
+
+###
+POST http://localhost:3000/api/generateAccessToken HTTP/1.1
+Content-Type: application/json
+
+{
+    "email": "abc@xyz.com",
+    "user": "abc",
+    "password": "password"
+}

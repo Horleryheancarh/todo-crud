@@ -1,5 +1,6 @@
 const User = require('../models/userModel')
 const bcrypt = require('bcryptjs')
+const fastifyJWT = require('fastify-jwt')
 
 const signupUser = async (req, reply) => {
 
@@ -37,12 +38,9 @@ const loginUser = async (req, reply) => {
             const isValid = await bcrypt.compare(password, user1.password)
 
             if (isValid){
-                isLoggedIn = {
-                    isAuth: true,
-                    name: user1.username,
-                    email: user1.email
-                }
-                reply.send({ message: 'Log In successful'})
+                // fastify.log.info(user1)
+                const token = await reply.jwtSign({user1}, {expiresIn: 1800})
+                reply.send({ message: 'Log In successful', token })
             }else {
                 reply.code(300).send({message: 'Invalid password'})
             }
@@ -52,24 +50,4 @@ const loginUser = async (req, reply) => {
     }
 }
 
-const logoutUser = async (req, reply) => {
-    try {
-        if(isLoggedIn.isAuth) {
-            console.log(isLoggedIn)
-            isLoggedIn = {
-                isAuth: false,
-                name: '',
-                email: ''
-            }
-            console.log(isLoggedIn)
-            reply.send({message: 'Logout successful'})
-        } else {
-            reply.send({message: 'You need to log in before you can logout'})
-        }
-    } catch (error) {
-        reply.code(401).send({message: "Unauthorized Access Please LogIn"})
-    }
-}
-
-
-module.exports = { signupUser, loginUser, logoutUser }
+module.exports = { signupUser, loginUser }

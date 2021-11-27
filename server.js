@@ -1,5 +1,5 @@
 // IMPORTS
-const dotenv = require('dotenv').config()
+require('dotenv').config()
 const fastify = require('fastify')({ logger: true })
 const mongoose = require('mongoose')
 
@@ -12,18 +12,19 @@ fastify.register(require('fastify-swagger'), {
         info: {title: 'TODO-crud'}
     }
 })
-fastify.decorate('isLoggedIn', {
-    isAuth: false,
-    username: '',
-    email: ''
+fastify.register(require('fastify-jwt'), {
+    secret: process.env.JWT_SECRET
 })
+
+// MIDDLEWARES
+fastify.register(require('./middleware/auth'))
 
 // ROUTES
 fastify.register(require('./routes/userRoutes'))
 fastify.register(require('./routes/itemRoutes'))
 
 
-// DATABASE CONNECT
+// DATABASE CONNECTION
 mongoose.connect(process.env.DB_URI, {
     useNewUrlParser: true,
     useFindAndModify: false,
@@ -40,6 +41,7 @@ mongoose.connect(process.env.DB_URI, {
 const start = async () => {
     try {
         await fastify.listen(process.env.PORT || 3000, process.env.HOST || '0.0.0.0')
+        fastify.log.info(`Server started at ${fastify.server.address().port}`)
     } catch (error) {
         fastify.log.error(error)
     }

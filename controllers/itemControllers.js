@@ -3,12 +3,9 @@ const Item = require('../models/ItemModel')
 
 const getItems = async (req, reply) => {
     try {
-        if(isLoggedIn.isAuth){
-            const items = await Item.find({ email: isLoggedIn.email })
-            reply.send(items)
-        } else {
-            reply.send({message: 'Please Login'})
-        }
+        console.log(req.user)
+        const items = await Item.find({ email: req.user.email })
+        reply.send(items)
     } catch (e) {
         reply.code(401).send({message: "Unauthorized Access Please Login"})
     }
@@ -17,13 +14,10 @@ const getItems = async (req, reply) => {
 
 const getItem = async (req, reply) => {
     try {
-        if(isLoggedIn.isAuth){
-            const title = req.params.title
-            const item = await Item.findOne({title: title, email: isLoggedIn.email})
-            reply.send(item)
-        } else {
-            reply.send({message: 'Please Login'})
-        }
+        const title = req.params.title
+        console.log(req.user)
+        const item = await Item.findOne({title: title, email: isLoggedIn.email})
+        reply.send(item)
     } catch (e) {
         console.log(e)
         reply.code(401).send({message: "Unauthorized Access Please LogIn"})
@@ -33,36 +27,23 @@ const getItem = async (req, reply) => {
 
 const updateItem = async (req, reply) => {
     try {
-        if(isLoggedIn.isAuth) {
-            var item = req.body
-            const title = req.params.title
-            item.email = isLoggedIn.email
-            await Item.findOneAndUpdate({ title: title, email: item.email }, item)
-            const updatedItem = await Item.findOne({ title: item.title, email: item.email })
-            reply.send(updatedItem)
-        } else {
-            reply.send({ message: 'You need to log in'})
-        }
+
+        var item = req.body
+        const title = req.params.title
+        await Item.findOneAndUpdate({ title: title, email: item.email }, item)
+        const updatedItem = await Item.findOne({ title: item.title, email: item.email })
+        reply.send(updatedItem)
     } catch (e) {
-        reply.code(401).send({message: "Unauthorized Access Please LogIn"})
+        reply.code(401).send({message: e })
     }
 }
 
 
 const postItem = async (req, reply) => {
     try {
-        if(isLoggedIn) {
-            if (isLoggedIn.isAuth) {
-                var item = req.body
-                item.email = isLoggedIn.email
-                const newItem = await Item.create(item)
-                reply.code(201).send(newItem)
-            } else {
-                reply.code(401).send({ message: 'Please Log In' })
-            }
-        } else {
-            reply.code(401).send({ message: 'Please Log In' })
-        }
+        var item = req.body
+        const newItem = await Item.create(item)
+        reply.code(201).send(newItem)
     } catch (e) {
         reply.code(401).send({message: "Unauthorized Access Please LogIn"})
     }
@@ -71,12 +52,8 @@ const postItem = async (req, reply) => {
 
 const deleteItem = async (req, reply) => {
     try {
-        if(isLoggedIn.isAuth) {
-            await Item.findOneAndDelete({ title: req.params.title, email: isLoggedIn.email })
-            reply.send({message: 'Deleted successfully'})
-        } else {
-            reply.send({ message: 'Please Log In' })
-        }
+        // await Item.findOneAndDelete({ title: req.params.title, email: isLoggedIn.email })
+        reply.send({message: 'Deleted successfully'})
     } catch (e) {
         reply.code(401).send({message: "Unauthorized Access Please LogIn"})
     }
