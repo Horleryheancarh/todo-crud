@@ -1,25 +1,13 @@
 const { getItems, getItem, postItem, deleteItem, updateItem } = require('../controllers/itemControllers')
 
-// subItem Schema
-const subItem = {
-    type: 'object',
-    properties: {
-        details: { type: 'string' },
-        completed: { type: 'boolean' }
-    }
-}
 
 // Item Schema
 const Item = {
     type: 'object',
     properties: {
-        title: { type: 'string' },
-        email: { type: 'string' },
-        description: { type: 'string' },
-        subItems: { 
-            type: 'array',
-            items: subItem
-        },
+        _id: { type: 'string' },
+        details: { type: 'string' },
+        completed: { type: 'boolean' },
     }
 }
 
@@ -33,10 +21,6 @@ const getItemsOpts = {
             }
         }
     },
-
-    preHandler: fastify.jwtAuth,
-
-    handler: getItems
 }
 
 // Get item
@@ -46,8 +30,6 @@ const getItemOpts = {
             200: Item
         }
     },
-
-    handler: getItem
 }
 
 // Add item
@@ -55,19 +37,16 @@ const postItemOpts = {
     schema: {
         body: {
             type: 'object',
-            required: [ 'title', 'description' ],
+            required: [ 'details' ],
             properties: {
-                username: { type: 'string' },
-                title: { type: 'string' },
-                subItems: { type: 'array' },
+                details: { type: 'string' },
+                completed: { type: 'boolean' },
             }
         },
         response: {
             201: Item
         }
     },
-    
-    handler: postItem
 }
 
 // Delete item
@@ -82,8 +61,6 @@ const deleteItemOpts = {
             }
         }
     },
-
-    handler: deleteItem
 }
 
 // Update item
@@ -93,27 +70,45 @@ const updateItemOpts = {
             200: Item
         }
     },
-
-    handler: updateItem
 }
 
 
-function itemRoutes (fastify, options, done) {
+function itemRoutes(fastify, options, done) {
     // Get all items
-    fastify.get('/items', getItemsOpts)
+    fastify.get('/item', {
+        preValidation: fastify.jwtAuth, 
+        schema: getItemsOpts.schema, 
+        handler: getItems
+    })
 
     // Get single item description
-    fastify.get('/item/:title',  getItemOpts)
+    fastify.get('/item/:title',{
+        preValidation: fastify.jwtAuth,
+        schema: getItemOpts.schema,
+        handler: getItem
+    })
     
     // Add item
-    fastify.post('/item', postItemOpts)
+    fastify.post('/item', {
+        preValidation: fastify.jwtAuth,
+        schema: postItemOpts.schema,
+        handler: postItem
+    })
 
     // Delete item
-    fastify.delete('/item/:title', deleteItemOpts)
+    fastify.delete('/item/:title', {
+        preValidation: fastify.jwtAuth,
+        schema: deleteItemOpts.schema,
+        handler: deleteItem
+    })
 
     // Update item
-    fastify.put('/item/:title', updateItemOpts)
-    
+    fastify.put('/item/:title', {
+        preValidation: fastify.jwtAuth,
+        schema: updateItemOpts.schema,
+        handler: updateItem
+    })
+
     done()
 }
 

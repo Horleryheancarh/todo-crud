@@ -19,6 +19,13 @@ fastify.register(require('fastify-jwt'), {
 // MIDDLEWARES
 fastify.register(require('./middleware/auth'))
 
+// HOOKS
+fastify.addHook('preValidation', async function (req, reply) {
+    if (req.raw.url === '/item') {
+      await fastify.jwtAuth
+    }
+  })
+
 // ROUTES
 fastify.register(require('./routes/userRoutes'))
 fastify.register(require('./routes/itemRoutes'))

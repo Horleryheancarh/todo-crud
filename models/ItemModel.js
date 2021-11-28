@@ -5,21 +5,15 @@ const itemSchema = new Schema ({
     id : {
         type: String,
     },
-    title : {
+    username : {
         type: String,
     },
-    email: {
+    details: {
         type: String,
     },
-    description: {
-        type: String,
-    },
-    subItems: {
-        type: Array,
-        properties: {
-            details: String,
-            completed: Boolean
-        }
+    completed: {
+        type: Boolean,
+        default: false
     }
 })
 

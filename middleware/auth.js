@@ -2,12 +2,13 @@ const fp = require('fastify-plugin')
 
 
 module.exports = fp(async (fastify) => {
-    fastify.decorate('jwtAuth', async (req, res) => {
+    fastify.decorate('jwtAuth', async (req, res, done) => {
         try {
             req.user = await req.jwtVerify()
-            console.log(req.user)
         } catch (error) {
             res.send(error)
         }
+
+        done()
     })
 })
