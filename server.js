@@ -15,6 +15,7 @@ fastify.register(require('fastify-swagger'), {
 fastify.register(require('fastify-jwt'), {
     secret: process.env.JWT_SECRET
 })
+fastify.register(require('fastify-redis'), { host: process.env.HOST})
 
 // MIDDLEWARES
 fastify.register(require('./middleware/auth'))

@@ -59,8 +59,12 @@ function userRoutes (fastify, options, done) {
     // Signup user
     fastify.post('/signup', signUp)
 
+    // Google Sign In
+
     // Login user
     fastify.post('/login', logIn)
+
+
 
     done()
 }

@@ -16,7 +16,6 @@ const getItem = async (req, reply) => {
         const id = req.params.id
         let test = await Item.findOne({ id, username: req.user.username })
         if (test){
-            // const item = await Item.findOne({ id: id, username: req.user.username})
             reply.send(test)
         } else {
             reply.code(400).send({message: "Item does not exist"})
