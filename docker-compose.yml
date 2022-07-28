@@ -1,0 +1,57 @@
+version: '3.9'
+
+services:
+
+  api:
+    build:
+      context: .
+    image: todo-crud
+    restart: on-failure
+    env_file: docker-compose.env
+    environment: 
+      SERVICES: api
+      PORT: 443
+    depends_on:
+      - mongo
+    labels:
+      - "traefik.enable=true"
+      # - "traefik.http.middlewares.justredirect.redirectscheme.scheme=https"
+      # - "traefik.http.middlewares.justredirect.redirectscheme.permanent=true"
+      # - "traefik.http.routers.api-gw.middlewares=justredirect"
+      - "traefik.http.routers.api-gw.rule=Host(`localhost`)"
+      - "traefik.http.routers.api-gw.entrypoints=web"
+      - "traefik.http.routers.api-gws.rule=Host(`localhost`)"
+      - "traefik.http.routers.api-gws.entrypoints=websecure"
+      - "traefik.http.routers.api-gws.tls.certresolver=mylogi"
+      - "traefik.http.services.api-gws.loadbalancer.server.port=443"
+    networks:
+      - internal
+    
+  mongo:
+    image: mongo
+    restart: on-failure
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    networks:
+      - internal
+  
+  traefik:
+    image: traefik:v2.1
+    restart: on-faillure
+    command:
+      - "--api.insecure=false" # Don't do that in production!
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--certificatesresolvers.mylogi.acme.httpchallenge=true"
+      - "--certificatesresolvers.mylogi.acme.httpchallenge.entrypoint=web"
+      # - "--certificatesresolvers.mylogi.acme.caserver=https://acme-staging-v02.api.letsencrypt.org/directory"
+      - "--certificatesresolvers.mylogi.acme.email=ololayinka15@gmail.com"
+      - "--certificatesresolvers.mylogi.acme.storage=/letsencrypt/acme.json"
+    ports:
+      - 443:443
+      - 80:80
+    networks:
+      - internal
