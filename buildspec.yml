@@ -1,25 +1,16 @@
+version: 0.2
+
 phases:
-  pre-build:
+  install:
+    runtime-versions:
+      nodejs: 14
     commands:
-      - echo Logging in to ECR
-      - aws --version
-      - $(aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email)
-      - REPOSITORY _URI=545865978854.dkr.ecr.us-east-2.amazonaws.com/todo
-      - IMAGE_TAG=build-$(echo $CODEBUILD_BUILD_ID | awk -F":" '{print $2}')
-  build:
+      - echo "Installing project dependencies ..."
+      - yarn install
+#   build:
+#     commands:
+#       - echo "Building project ..."
+#       - yarn run build
+  post_build:
     commands:
-      - echo Build started on `date`
-      - echo Building The Docker Image....
-      - docker build -t $REPOSITORY_URI:latest .
-      - docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:$IMAGE_TAG
-  post-build:
-    commands:
-      - echo Build completed on `date`
-      - echo Pushing the Docker images...
-      - docker push $REPOSITORY_URI:latest
-      - docker push $REPOSITORY_URI:$IMAGE_TAG
-      - echo Writing image definitions file...
-      - printf '[{"name":"nodeapp","imageUri":"%s"}]' $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
-      - cat imagedefinitions.json 
-artifacts:
-    files: imagedefinitions.json
+      - echo "Build completed on `date`"
