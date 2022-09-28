@@ -10,7 +10,7 @@ phases:
   build:
     commands:
       - echo "Building project ..."
-      - yarn run server
+      - yarn run start
   post_build:
     commands:
       - echo "Build completed on `date`"
