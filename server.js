@@ -33,7 +33,7 @@ fastify.register(require('./routes/itemRoutes'))
 
 
 // DATABASE CONNECTION
-mongoose.connect(process.env.DB_URI, {
+mongoose.connect(process.env.DB_URI || 'mongodb+srv://yinka:passw07d@test.hqj3b.mongodb.net/test?authSource=admin&replicaSet=atlas-6ieg12-shard-0&readPreference=primary&appname=MongoDB%20Compass&ssl=true', {
     useNewUrlParser: true,
     useFindAndModify: false,
     useUnifiedTopology: true
