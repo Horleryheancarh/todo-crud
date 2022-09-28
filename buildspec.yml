@@ -7,10 +7,10 @@ phases:
     commands:
       - echo "Installing project dependencies ..."
       - yarn install
-  build:
-    commands:
-      - echo "Building project ..."
-      - yarn run start
+#   build:
+#     commands:
+#       - echo "Building project ..."
+#       - yarn run start
   post_build:
     commands:
       - echo "Build completed on `date`"
