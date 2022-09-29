@@ -5,7 +5,7 @@ files:
     destination: /home/ubuntu/app/
 hooks:
   BeforeInstall:
-    - location: deploy/start_server
+    - location: deploy/install_dependencies
       timeout: 300
       runas: ubuntu
   AfterInstall:
