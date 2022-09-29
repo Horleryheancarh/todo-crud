@@ -3,6 +3,13 @@ os: linux
 files: 
   - source: /
     destination: /home/ubuntu/app/
+permissions:
+  - object: /home/ubuntu/app
+    pattern: "**"
+    owner: ubuntu
+    mode: 644
+    type:
+      - directory
 hooks:
   BeforeInstall:
     - location: deploy/install_dependencies.sh
